@@ -1,0 +1,53 @@
+What Happens When You Type google.com in Your Browser and Press Enter
+
+In the realm of software engineering, understanding the full journey of what happens when you type a URL in your browser and press enter is crucial. This knowledge not only showcases your grasp of web technologies but also prepares you for various roles, from front-end development to site reliability engineering (SRE). Here’s a comprehensive breakdown of the entire process:
+
+1. DNS Request:
+When you type https://www.google.com in your browser and hit Enter, the first step involves translating the human-readable domain name into an IP address that computers can understand. This is achieved through the Domain Name System (DNS).
+
+DNS Lookup: Your browser first checks its cache to see if it has recently queried www.google.com. If not found, it queries the DNS resolver configured on your machine (usually provided by your ISP).
+Recursive Query: The DNS resolver performs a recursive query, asking other DNS servers in a hierarchical manner until it finds the IP address associated with www.google.com.
+2. TCP/IP:
+Once the IP address (e.g., 142.250.64.78) is obtained, the browser establishes a connection to the web server using the Transmission Control Protocol (TCP) over the Internet Protocol (IP).
+
+Three-Way Handshake: To ensure a reliable connection, TCP performs a three-way handshake:
+SYN: The browser sends a SYN (synchronize) packet to the server.
+SYN-ACK: The server responds with a SYN-ACK (synchronize-acknowledge) packet.
+ACK: The browser sends an ACK (acknowledge) packet back to the server.
+3. Firewall
+During this process, both client and server firewalls play a role in inspecting the incoming and outgoing packets to ensure they are legitimate and safe.
+
+Packet Filtering: Firewalls check the headers of packets to determine if they should be allowed through, providing an additional layer of security.
+4. HTTPS/SSL
+For secure communication, https:// indicates that SSL/TLS (Secure Sockets Layer/Transport Layer Security) is being used.
+
+SSL Handshake: This involves several steps:
+ClientHello: The browser sends a ClientHello message with its SSL version and cipher settings.
+ServerHello: The server responds with a ServerHello message, agreeing on SSL parameters.
+Certificate: The server sends its SSL certificate, which the browser verifies.
+Key Exchange: Both parties exchange cryptographic keys.
+Finished: Encrypted messages are exchanged, indicating that the handshake is complete.
+5. Load Balancer
+In a large-scale application like Google, load balancers distribute incoming traffic across multiple servers to ensure no single server is overwhelmed.
+
+Load Distribution: The load balancer might use algorithms like round-robin, least connections, or IP hash to decide which server should handle the request.
+6. Web Server
+The load balancer routes the request to one of the web servers.
+
+Handling the Request: The web server (e.g., Apache, Nginx) processes the request. If the content is static (like images or HTML files), it serves them directly.
+7. Application Server
+For dynamic content, the request is forwarded to an application server (e.g., Node.js, Django).
+
+Processing the Logic: The application server runs the backend code, processes any business logic, interacts with databases, and prepares the response.
+8. Database
+Often, the application server needs to query a database to fetch or store data.
+
+Database Query: Using SQL (for relational databases like MySQL) or NoSQL (for databases like MongoDB), the application server retrieves the necessary information.
+Data Retrieval: The database executes the query and sends the results back to the application server.
+9. Response
+Once the application server has all the necessary data, it constructs the final response, typically an HTML page, which it sends back to the web server.
+
+Rendering the Page: The web server sends this HTML response to the browser.
+Browser Rendering: The browser parses the HTML, applies CSS for styling, and executes JavaScript for dynamic functionality, rendering the webpage you see.
+Conclusion
+Understanding this workflow is essential for any software engineer. It involves multiple components, each playing a vital role in delivering web content efficiently and securely. Mastering these concepts not only helps you in interviews but also provides a solid foundation for building robust and scalable web applications.

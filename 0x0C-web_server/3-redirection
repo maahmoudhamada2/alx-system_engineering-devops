@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Script to install Nginx web server
+
+sudo apt-get -y update
+sudo apt-get -y install nginx
+sudo ufw allow 'Nginx HTTP'
+
+sudo chown -R "$USER":"$USER" /var/www
+sudo chmod -R 755 /var/www
+
+echo "Hello World!" > /var/www/html/index.nginx-debian.html
+sudo service nginx start
+
+redirection="rewrite ^/redirect_me/\$ https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;"
+sudo sed -i "/server_name _;/a \        $redirection" /etc/nginx/sites-available/default
+sudo nginx -s reload
+

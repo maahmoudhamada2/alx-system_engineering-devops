@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# Script to install Nginx web server
+
+sudo apt-get -y update
+sudo apt-get -y install nginx
+sudo ufw allow 'Nginx HTTP'
+
+sudo chown -R "$USER":"$USER" /var/www
+sudo chmod -R 755 /var/www
+
+echo "Hello World!" > /var/www/html/index.nginx-debian.html
+sudo service nginx start
+
+redirection="rewrite ^/redirect_me/\$ https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;"
+sudo sed -i "/server_name _;/a \        $redirection" /etc/nginx/sites-available/default
+sudo nginx -s reload
+
+echo "Ceci n'est pas une page" > /var/www/html/custom_404.html;
+echo "" >> /var/www/html/custom_404.html
+
+config_404="error_page 404 /custom_404.html;\n\tlocation = /custom_404.html {\n\t\troot /var/www/html/;\n\t\tinternal;\n}"
+
+sudo sed -i "/server_name _;/a\        $config_404" /etc/nginx/sites-available/default
+sudo nginx -s reload
