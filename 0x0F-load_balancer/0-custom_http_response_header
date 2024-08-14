@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Script to install Nginx web server
+
+sudo apt-get -y update
+sudo apt-get -y install nginx
+sudo ufw allow 'Nginx HTTP'
+
+sudo chown -R "$USER":"$USER" /var/www
+sudo chmod -R 755 /var/www
+
+echo "Hello World!" > /var/www/html/index.nginx-debian.html
+sudo service nginx start
+host=$(hostname)
+custom_header="add_header X-Served-By '$host';"
+sudo sed -i "/location \//a\                $custom_header" /etc/nginx/sites-available/default
+sudo service nginx restart
